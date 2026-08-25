@@ -1,0 +1,144 @@
+.logo-intro {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  z-index: 520;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:
+    max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+  box-sizing: border-box;
+  direction: ltr;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(255, 255, 255, 0.08), transparent 36%),
+    linear-gradient(180deg, #0c1016 0%, #151b24 100%);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.logo-intro-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(72vw, 280px);
+  height: min(72vw, 280px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 20, 20, 0.28), transparent 68%);
+  filter: blur(12px);
+  animation: glowPulse 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.logo-stage {
+  position: relative;
+  z-index: 2;
+  width: min(72vw, 58dvh, 260px);
+  aspect-ratio: 360 / 410;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+.logo-canvas,
+.logo-photo,
+.logo-shine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.logo-canvas {
+  z-index: 1;
+  object-fit: contain;
+}
+
+.logo-photo {
+  z-index: 2;
+  object-fit: contain;
+  background: transparent;
+  opacity: 0;
+  transform: scale(0.94);
+  filter: blur(8px);
+  transition: opacity 0.55s ease, transform 0.55s ease, filter 0.55s ease;
+}
+
+.logo-photo.is-formed {
+  opacity: 1;
+  transform: scale(1);
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.38));
+}
+
+.logo-shine {
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.5) 48%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+}
+
+.logo-shine.is-formed {
+  animation: ceramicSweep 0.9s 0.15s ease-out forwards;
+}
+
+.logo-intro.is-exiting {
+  animation: introLeave 0.7s ease-in forwards;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes ceramicSweep {
+  to {
+    transform: translateX(130%);
+  }
+}
+
+@keyframes introLeave {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 700px) {
+  .logo-stage {
+    width: min(68vw, 52dvh, 220px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-photo {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .logo-intro-glow,
+  .logo-shine {
+    animation: none;
+  }
+}
